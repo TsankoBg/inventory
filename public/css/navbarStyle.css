@@ -1,0 +1,44 @@
+
+
+#navbar-left {
+    top: 5%;
+    left:  1%;
+  }
+
+#navbar-right {
+    right: 1%;
+    top: 5%;
+  }
+
+.card{
+    width: 200px;
+    right: 2%;
+    left: 2%;
+}
+input { margin-bottom: 10px; }
+
+
+  @media only screen and (max-width: 500px) {
+    .card{     
+         width: 96%;
+        height: 40%;
+         right: 2%;
+         left: 2%;
+     }
+     .card-img-top{
+         height: 200px;
+     }
+     #navbar-right {
+         right: 1%;
+         top: 5%;
+       }
+       #navbar-left {
+        top: 5%;
+        left:  1%;
+    
+      }
+    
+  }
+
+
+  
