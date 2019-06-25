@@ -4,8 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @UniqueEntity("barcode")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product implements \JsonSerializable
 {
@@ -17,7 +22,8 @@ class Product implements \JsonSerializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string $barcode
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $barcode;
 
@@ -55,6 +61,20 @@ class Product implements \JsonSerializable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
+
+    private $file;
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -153,9 +173,9 @@ class Product implements \JsonSerializable
             'name'=> $this->name,
             'quantity'=>$this->quantity,
             'price'=>$this->price,
-            'price'=>$this->priceBought,
-            'date_added'=>$this->dateAdded->format('Y-m-d H:i:s'),
-            'date_added'=>$this->dateUpdated->format('Y-m-d H:i:s'),
+            'price_bought'=>$this->priceBought,
+            //'date_added'=>$this->dateAdded->format('Y-m-d H:i:s'),
+            //'date_added'=>$this->dateUpdated->format('Y-m-d H:i:s'),
         );
     }
 
@@ -169,5 +189,17 @@ class Product implements \JsonSerializable
         $this->image = $image;
 
         return $this;
+    }
+
+
+        /**
+     * @ORM\PreUpdate()
+     *  @ORM\PrePersist()    
+     * 
+     */
+    public function preUpload()
+    {
+        $this->dateAdded=\DateTime::createFromFormat('%Y-%m-%d %H:%i:%s', date('%Y-%m-%d %H:%i:%s'));
+        $this->dateUpdated=\DateTime::createFromFormat('%Y-%m-%d %H:%i:%s', date('%Y-%m-%d %H:%i:%s'));
     }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use App\Entity\Product;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProductType extends AbstractType
 {
@@ -28,6 +29,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'id' => 'barcode-input',
             'placeholder' => 'Баркод'),
         ])
+        ->add('file', FileType::class)
         ->add('quantity',NumberType::class,[
             'attr' => array( 
             'class' => 'form-control',
@@ -43,6 +45,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
         ->add('Add', SubmitType::class,[
             'attr' => ['class' => 'btn btn-primary'] ,
         ])
+        
     ;
 }
     /**

@@ -15,7 +15,9 @@ class AppController extends AbstractController
     public function index()
     {
         $product=new Product();
-        $form=$this->get('form.factory')->create(ProductType::class,$product);
+        $form=$this->get('form.factory')->create(ProductType::class,$product,array(
+            'action' => $this->generateUrl('add-product'),
+            'method' => 'POST',));
         return $this->render('app/index.html.twig', [
             'form' => $form->createView(),
         ]);
