@@ -174,6 +174,7 @@ class Product implements \JsonSerializable
             'quantity'=>$this->quantity,
             'price'=>$this->price,
             'price_bought'=>$this->priceBought,
+            'image'=>$this->image,
             //'date_added'=>$this->dateAdded->format('Y-m-d H:i:s'),
             //'date_added'=>$this->dateUpdated->format('Y-m-d H:i:s'),
         );

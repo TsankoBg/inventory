@@ -14,40 +14,53 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class ProductType extends AbstractType
 {
 
-public function buildForm(FormBuilderInterface $builder, array $options)
-{
-    $builder
-        ->add('name',TextType::class,[
-            'attr' => array( 
-            'class' => "form-control",
-            'id' => 'name-input',
-            'placeholder' => 'Име на продукта'),
-        ])
-        ->add('barcode',TextType::class,[
-            'attr' => array( 
-            'class' => 'form-control',
-            'id' => 'barcode-input',
-            'placeholder' => 'Баркод'),
-        ])
-        ->add('file', FileType::class)
-        ->add('quantity',NumberType::class,[
-            'attr' => array( 
-            'class' => 'form-control',
-            'id' => 'qunatity-input',
-            'placeholder' => '0'),
-        ])
-        ->add('price',NumberType::class,[
-            'attr' => array( 
-            'class' => "form-control",
-            'id' => 'price-input',
-            'placeholder' => '0'),
-        ])
-        ->add('Add', SubmitType::class,[
-            'attr' => ['class' => 'btn btn-primary'] ,
-        ])
-        
-    ;
-}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name', TextType::class, [
+                'attr' => array(
+                    'class' => "form-control",
+                    'id' => 'name-input',
+                    'placeholder' => 'Име на продукта'
+                ),
+            ])
+            ->add('barcode', TextType::class, [
+                'attr' => array(
+                    'class' => 'form-control',
+                    'id' => 'barcode-input',
+                    'placeholder' => 'Баркод'
+                ),
+            ])
+            ->add('file', FileType::class, ['required' => false,])
+
+            ->add('quantity', NumberType::class, [
+                'attr' => array(
+                    'class' => 'form-control',
+                    'id' => 'qunatity-input',
+                    'type' => 'number',
+                    'value' => '0',
+                    'placeholder' => '0'
+                ),
+                'required' => false,
+            ])
+            ->add('price', NumberType::class, [
+                'attr' => array(
+                    'class' => "form-control",
+                    'id' => 'price-input',
+                    'type' => 'number',
+                    'placeholder' => '0'
+                ),
+            ])
+            ->add('price_bought', NumberType::class, [
+                'attr' => array(
+                    'class' => "form-control",
+                    'id' => 'price_bought-input',
+                    'type' => 'number',
+                    'placeholder' => '0'
+                ),
+                'required' => false,
+            ]);
+    }
     /**
      * {@inheritdoc}
      */

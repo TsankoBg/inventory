@@ -12,10 +12,12 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Service\FileUploader;
 
+
 class ProductController extends AbstractController
 {
     /**
      * @Route("/products", name="products")
+     * 
      */
     public function getProducts(ProductService $productService)
     {
@@ -24,11 +26,11 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/product/{product_id}", name="product")
+     * @Route("/product/{barcode}", name="product")
      */
-    public function getProduct($product_id, ProductService $productService)
+    public function getProduct(Product $product, ProductService $productService)
     {
-        $product = $productService->getProduct($product_id);
+        //$product = $productService->getProduct($product_id);
         return new Response(json_encode($product, JSON_UNESCAPED_UNICODE));
     }
 
@@ -39,24 +41,54 @@ class ProductController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $product = new Product();
+        
         $form = $this->get('form.factory')->create(ProductType::class, $product);
         $form->handleRequest($request);
-        if ($request->isMethod('post')) {
+       // if ($request->isMethod('POST')) {
             $file = $product->getFile();
-            $fileName = $fileUploader->upload($file);
-            $product->setImage($fileName);
+            if(!empty($file))
+            {
+                $fileName = $fileUploader->upload($file);
+                $product->setImage($fileName);
+            }
+            
+        $name=$product->getName();
+        $quantity=$product->getQuantity();
+        $price=$product->getPrice();
+        $priceBought=$product->getPriceBought();
+        $image=$product->getImage();
+
+        $onDuplicate= " ON DUPLICATE KEY UPDATE quantity=quantity + $quantity";
+        if(!empty($name))
+        {
+            $onDuplicate=$onDuplicate. ",name='$name'";
+        }
+        if(!empty($price))
+        {
+            $onDuplicate=$onDuplicate. ",price=$price";
+        }
+        if(!empty($priceBought))
+        {
+            $onDuplicate=$onDuplicate. ",price_bought=$priceBought";
+        }
+        if(!empty($image))
+        {
+            $onDuplicate=$onDuplicate. ",image='$image'";
+        }
+
+        $product->setDateUpdated(\DateTime::createFromFormat('%Y-%m-%d %H:%i:%s', date('%Y-%m-%d %H:%i:%s')));
             // your code
-           $stmt= $em->getConnection()->prepare("INSERT INTO product (barcode, name, quantity, price, price_bought, image) 
-            VALUES (:barcode , :name, :quantity, :price, :price_bought, :image )
-            ");
+           $stmt= $em->getConnection()->prepare("INSERT INTO product (barcode, name, quantity, price, price_bought, image, date_updated) 
+            VALUES (:barcode , :name, :quantity, :price, :price_bought, :image, :date_updated)". $onDuplicate);
             $stmt->execute([
             'barcode'=>$product->getBarcode(),
             'name'=>$product->getName(),
             'quantity'=>$product->getQuantity(),
             'price'=>$product->getPrice(),
             'price_bought'=>$product->getPriceBought(),
-            'image'=>$product->getImage()]);
+            'image'=>$product->getImage(),
+            'date_updated'=>$product->getDateUpdated()->format('Y-m-d H:i:s')]);
             return new Response(json_encode($product));
         }
     }
-}
+

@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <title>Склад</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# <link rel="stylesheet" type="text/css" href="css/navbarStyle.css"> #}
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -32,49 +33,70 @@
             <i id="camera-icon" class="fas fa-camera fa-5x"></i>
         </div>
         <div class="navbar navbar-right" id="navbar-right">
-            <i class="fas fa-plus fa-5x "></i>
+            <i id="temp-icon" class="fas fa-plus fa-5x"></i>
         </div>
     </nav>
-    <form>
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form)}}
         <div class="form-group" style="border:none">
             <div class="card">
-                <div class="card-header"><input type="text" class="form-control" id="product-name"
-                        placeholder="Име на продукта"></div>
+                <div class="card-header"> {{ form_widget(form.name) }}</div>
                 <div class="image-upload">
 
                 <div class="card-body">
                     <div class="form-group row">
                         <label for="barcode-input" class="col-1 col-form-label">Б</label>
                         <div class="col-11">
-                            <input class="form-control" type="text" value="Баркод" id="barcode-input">
+                            {{ form_widget(form.barcode) }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="quantity-input" class="col-1 col-form-label">#</label>
                         <div class="col-11">
-                            <input class="form-control" type="number" value="0" id="quantity-input">
+                            {{ form_widget(form.quantity) }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="price-input" class="col-1 col-form-label">$</label>
                         <div class="col-11">
-                            <input class="form-control" type="number" value="0" id="price-input">
+                            {{ form_widget(form.price) }}
                         </div>
                     </div>
-                    <label for="file-input">
-                            <img class="card-img-top" id="product-image" style="height: 200px;" src="assets/fruitVeggy.png"
+                    <div class="form-group row">
+                        <label for="price-bought-input" class="col-1 col-form-label">$</label>
+                        <div class="col-11">
+                            {{ form_widget(form.price_bought) }}
+                        </div>
+                    </div>
+                    <label for="product_file">
+                            <img class="card-img-top" id="product_image" style="height: 200px;" src="assets/fruitVeggy.png"
                                 alt="Card image cap">
                         </label>
-                        <input id="file-input" style="display: none;" type="file" />
+                        {{ form_widget(form.file) }}
                     </div>
-    
+                    <div class="float">
+                    <button type="submit" class="btn btn-dark">   <i class="fas fa-plus fa-3x "></i></button></div>
                 </div>
             </div>
         </div>
-    </form>
+        {{ form_end(form) }}
 
-  {% form_theme form 'bootstrap_4_layout.html.twig' %}
-    {{ form(form) }}
+  {# {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form(form) }} #}
 </body>
-
 <script src="js/quagga.js"></script>
+<style>
+label.custom-file-label{
+    display: none;
+    
+}
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40%;
+	right: 10px;
+	text-align:center;
+
+}
+</style>

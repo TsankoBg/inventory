@@ -21,7 +21,11 @@ class ProductService
         $product = $this->em->getRepository(Product::class)->find($product_id);
         return $product;
     }
-
+    public function getProductByBarcode($barcode)
+    {
+        $product = $this->em->getRepository(Product::class)->findOneBy(['barcode'=>$barcode]);
+        return $product;
+    }
     public function getProducts()
     {
         $products = $this->em->getRepository(Product::class)->findAll();
