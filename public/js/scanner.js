@@ -18,7 +18,7 @@ $(document).ready(function () {
   tempButton.click(function () {
     $.ajax({
       type: "POST",
-      url: '/product/' + 21,
+      url: '/product/' + inputProductBarcode.val(),
      // data: some , // serializes the form's elements.
       success: function (data) {
         alert(data); // show response from the php script.
@@ -102,7 +102,10 @@ $(document).ready(function () {
 
 
 
-  //show image
+
+})
+
+ //show image
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -118,8 +121,3 @@ $(document).ready(function () {
   $("#product_file").change(function () {
     readURL(this);
   });
-})
-
-
-
-
