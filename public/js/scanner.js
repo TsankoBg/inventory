@@ -45,9 +45,9 @@ $(document).ready(function () {
     Quagga.onDetected(function (result) {
       var last_code = result.codeResult;
       last_result.push(last_code);
-      console.log(last_code);
+      //console.log(last_code.code);
       //alert(last_code.code);
-      $('#barcode-input').val(last_code.code);
+      inputProductBarcode.val(last_code.code);
 
       Quagga.stop();
       interactiveDiv.hide();
