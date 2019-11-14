@@ -1,17 +1,14 @@
-
-
 $(document).ready(function () {
   const cameraButton = $('#camera-icon');
   const tempButton = $('#temp-icon');
   const interactiveDiv = $('#interactive');
 
-  const inputProductName=$('#product_name');
-  const inputProductQuantity=$('#product_quantity');
-  const inputProductBarcode=$('#product_barcode');
-  const inputProductPrice=$('#product_price');
-  const inputProductPriceBought=$('#product_price_bought');
-  const inputProductImage=$('#product_image');
-  
+  const inputProductName = $('#product_name');
+  const inputProductQuantity = $('#product_quantity');
+  const inputProductBarcode = $('#product_barcode');
+  const inputProductPrice = $('#product_price');
+  const inputProductPriceBought = $('#product_price_bought');
+  const inputProductImage = $('#product_image');
   //var w = window.innerWidth;
   //var h = window.innerHeight;
 
@@ -19,25 +16,22 @@ $(document).ready(function () {
     $.ajax({
       type: "POST",
       url: '/product/' + inputProductBarcode.val(),
-     // data: some , // serializes the form's elements.
+      // data: some , // serializes the form's elements.
       success: function (data) {
         alert(data); // show response from the php script.
-        const parsedData=JSON.parse(data);
+        const parsedData = JSON.parse(data);
 
         inputProductName.val(parsedData.name);
         inputProductBarcode.val(parsedData.barcode)
         inputProductQuantity.val(parsedData.quantity);
         inputProductPrice.val(parsedData.price);
         inputProductPriceBought.val(parsedData.price_bought);
-        if(parsedData.image=='' || null || 'null')
-        {
-          inputProductImage.attr('src','assets/fruitVeggy.png');
+        if (parsedData.image == '' || null || 'null') {
+          inputProductImage.attr('src', 'assets/fruitVeggy.png');
         }
-        else{
-          inputProductImage.attr('src','uploads/images/'+ parsedData.image);
+        else {
+          inputProductImage.attr('src', 'uploads/images/' + parsedData.image);
         }
-      
-
       }
     });
   })
@@ -54,8 +48,6 @@ $(document).ready(function () {
       console.log(last_code);
       //alert(last_code.code);
       $('#barcode-input').val(last_code.code);
-
-
 
       Quagga.stop();
       interactiveDiv.hide();
@@ -101,23 +93,22 @@ $(document).ready(function () {
   });
 
 
-
-
-})
-
- //show image
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        $('#product_image').attr('src', e.target.result);
-      }
-
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
   $("#product_file").change(function () {
     readURL(this);
   });
+})
+
+
+//show image
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#product_image').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+
