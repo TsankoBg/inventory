@@ -24,7 +24,7 @@
 				<i id="camera-icon" class="fas fa-camera fa-5x"></i>
 			</div>
 			<div class="navbar navbar-right" id="navbar-right">
-				<i id="temp-icon" class="fas fa-plus fa-5x"></i>
+				<i id="temp-icon" hidden class="fas fa-plus fa-5x"></i>
 			</div>
 		</nav>
 		{% form_theme form 'bootstrap_4_layout.html.twig' %}
@@ -45,19 +45,19 @@
 						<div class="form-group row">
 							<label for="quantity-input" class="col-1 col-form-label">#</label>
 							<div class="col-11">
-								{{ form_widget(form.quantity) }}
+								{{ form_widget(form.quantity, {attr: {'step':'0.01'}}) }}
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="price-input" class="col-1 col-form-label">$</label>
 							<div class="col-11">
-								{{ form_widget(form.price) }}
+								{{ form_widget(form.price, {attr: {'step':'0.01'}}) }}
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row" hidden>
 							<label for="price-bought-input" class="col-1 col-form-label">$</label>
 							<div class="col-11">
-								{{ form_widget(form.price_bought) }}
+								{{ form_widget(form.price_bought, {attr: {'step':'0.01'}}) }}
 							</div>
 						</div>
 						<label for="product_file">

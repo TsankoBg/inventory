@@ -45,7 +45,7 @@ $(document).ready(function () {
         target: document.querySelector('#yourElement')    // Or '#yourElement' (optional)
       },
       locator: {
-        patchSize: "medium",
+        patchSize: "high",
         halfSample: true
       },
       numOfWorkers: 2,
