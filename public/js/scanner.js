@@ -1,14 +1,16 @@
-$(document).ready(function () {
-  const cameraButton = $('#camera-icon');
-  const tempButton = $('#temp-icon');
-  const interactiveDiv = $('#interactive');
+const cameraButton = $('#camera-icon');
+const tempButton = $('#temp-icon');
+const interactiveDiv = $('#interactive');
 
-  const inputProductName = $('#product_name');
-  const inputProductQuantity = $('#product_quantity');
-  const inputProductBarcode = $('#product_barcode');
-  const inputProductPrice = $('#product_price');
-  const inputProductPriceBought = $('#product_price_bought');
-  const inputProductImage = $('#product_image');
+const inputProductName = $('#product_name');
+const inputProductQuantity = $('#product_quantity');
+const inputProductBarcode = $('#product_barcode');
+const inputProductPrice = $('#product_price');
+const inputProductPriceBought = $('#product_price_bought');
+const inputProductImage = $('#product_image');
+
+$(document).ready(function () {
+ 
   //var w = window.innerWidth;
   //var h = window.innerHeight;
 
