@@ -87,7 +87,7 @@ $(document).ready(function () {
       success: function (data) {
         //alert(data); // show response from the php script.
         const parsedData = JSON.parse(data);
-        alert(parsedData.name);
+        //alert(parsedData.name);
         inputProductName.val(parsedData.name);
         inputProductBarcode.val(parsedData.barcode)
         inputProductQuantity.val(parsedData.quantity);
