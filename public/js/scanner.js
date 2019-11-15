@@ -28,6 +28,7 @@ $(document).ready(function () {
       //console.log(last_code.code);
       //alert(last_code.code);
       //inputProductBarcode.val(last_code.code);
+      clearFields();
       checkProduct(last_code.code);
 
       Quagga.stop();
@@ -88,6 +89,7 @@ $(document).ready(function () {
         //alert(data); // show response from the php script.
         const parsedData = JSON.parse(data);
         //alert(parsedData.name);
+        clearFields();
         inputProductName.val(parsedData.name);
         inputProductBarcode.val(parsedData.barcode)
         inputProductQuantity.val(parsedData.quantity);
@@ -112,6 +114,16 @@ $(document).ready(function () {
       reader.readAsDataURL(input.files[0]);
     }
   }
+
+  function clearFields() {
+    inputProductName.val('');
+    inputProductBarcode.val('')
+    inputProductQuantity.val(0);
+    inputProductPrice.val(0);
+    inputProductPriceBought.val(0);
+    inputProductImage.attr('src', 'assets/fruitVeggy.png');
+  }
+
 })
 
 

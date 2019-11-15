@@ -41,6 +41,7 @@ class ProductType extends AbstractType
                     'value' => '0',
                     'placeholder' => '0'
                 ),
+                'html5'=>true,
                 'required' => false,
             ])
             ->add('price', NumberType::class, [
@@ -50,6 +51,7 @@ class ProductType extends AbstractType
                     'type' => 'number',
                     'placeholder' => '0'
                 ),
+                'html5'=>true,
             ])
             ->add('price_bought', NumberType::class, [
                 'attr' => array(
@@ -58,6 +60,7 @@ class ProductType extends AbstractType
                     'type' => 'number',
                     'placeholder' => '0'
                 ),
+                'html5'=>true,
                 'required' => false,
             ]);
     }
