@@ -13,27 +13,7 @@ $(document).ready(function () {
   //var h = window.innerHeight;
 
   tempButton.click(function () {
-    $.ajax({
-      type: "POST",
-      url: '/product/' + inputProductBarcode.val(),
-      // data: some , // serializes the form's elements.
-      success: function (data) {
-        alert(data); // show response from the php script.
-        const parsedData = JSON.parse(data);
-
-        inputProductName.val(parsedData.name);
-        inputProductBarcode.val(parsedData.barcode)
-        inputProductQuantity.val(parsedData.quantity);
-        inputProductPrice.val(parsedData.price);
-        inputProductPriceBought.val(parsedData.price_bought);
-        if (parsedData.image == '' || null || 'null') {
-          inputProductImage.attr('src', 'assets/fruitVeggy.png');
-        }
-        else {
-          inputProductImage.attr('src', 'uploads/images/' + parsedData.image);
-        }
-      }
-    });
+    checkProduct(inputProductBarcode.val());
   })
   interactiveDiv.click(function () {
     Quagga.stop;
@@ -47,8 +27,8 @@ $(document).ready(function () {
       last_result.push(last_code);
       //console.log(last_code.code);
       //alert(last_code.code);
-      inputProductBarcode.val(last_code.code);
-
+      //inputProductBarcode.val(last_code.code);
+      checkProduct(last_code.code);
       Quagga.stop();
       interactiveDiv.hide();
 
@@ -96,6 +76,9 @@ $(document).ready(function () {
   $("#product_file").change(function () {
     readURL(this);
   });
+
+
+  
 })
 
 
@@ -108,6 +91,31 @@ function readURL(input) {
     }
     reader.readAsDataURL(input.files[0]);
   }
+}
+
+function checkProduct(barcode)
+{
+  $.ajax({
+    type: "POST",
+    url: '/product/' + barcode,
+    // data: some , // serializes the form's elements.
+    success: function (data) {
+      //alert(data); // show response from the php script.
+      const parsedData = JSON.parse(data);
+
+      inputProductName.val(parsedData.name);
+      inputProductBarcode.val(parsedData.barcode)
+      inputProductQuantity.val(parsedData.quantity);
+      inputProductPrice.val(parsedData.price);
+      inputProductPriceBought.val(parsedData.price_bought);
+      if (parsedData.image == '' || null || 'null') {
+        inputProductImage.attr('src', 'assets/fruitVeggy.png');
+      }
+      else {
+        inputProductImage.attr('src', 'uploads/images/' + parsedData.image);
+      }
+    }
+  });
 }
 
 
