@@ -133,7 +133,6 @@ $(document).ready(function () {
 
   // ajax add product form submission
   $("#add-product-form").submit(function (e) {
-
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
     var form = $(this);
