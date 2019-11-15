@@ -100,8 +100,8 @@ $(document).ready(function () {
   function assignFields(parsedData) {
     inputProductName.val(parsedData.name);
     inputProductBarcode.val(parsedData.barcode)
-    inputProductQuantity.val(parsedData.quantity);
-    //inputProductPrice.val(parsedData.price);
+    //inputProductQuantity.val(parsedData.quantity);
+    inputProductPrice.val(parsedData.price);
     inputProductPriceBought.val(parsedData.price_bought);
     if (parsedData.image == '' || null || 'null') {
       inputProductImage.attr('src', 'assets/fruitVeggy.png');
