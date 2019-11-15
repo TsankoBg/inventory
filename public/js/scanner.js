@@ -16,26 +16,25 @@ $(document).ready(function () {
     checkProduct(inputProductBarcode.val());
   })
   interactiveDiv.click(function () {
-    Quagga.stop;
+    Quagga.stop;product_name
     interactiveDiv.hide();
   })
-
+  // on camera button click open camera 
   cameraButton.click(function () {
+    //show camera placeholder
     interactiveDiv.show();
+    //on scan detected
     Quagga.onDetected(function (result) {
       var last_code = result.codeResult;
       last_result.push(last_code);
-      //console.log(last_code.code);
-      //alert(last_code.code);
-      //inputProductBarcode.val(last_code.code);
-      clearFields();
+      // check if object which scanned barcode exists
       checkProduct(last_code.code);
 
       Quagga.stop();
       interactiveDiv.hide();
 
     })
-
+    //Initialize barcode scanner api
     Quagga.init({
       inputStream: {
         name: "Live",
@@ -74,13 +73,13 @@ $(document).ready(function () {
 
   });
 
-
+  //on file change
   $("#product_file").change(function () {
     readURL(this);
   });
-
-  function checkProduct(barcode)
-  {
+  // ajax call request on success returns found product and assigns the field 
+  function checkProduct(barcode) {
+    clearFields();
     $.ajax({
       type: "POST",
       url: '/product/' + barcode,
@@ -89,20 +88,25 @@ $(document).ready(function () {
         //alert(data); // show response from the php script.
         const parsedData = JSON.parse(data);
         //alert(parsedData.name);
-        clearFields();
-        inputProductName.val(parsedData.name);
-        inputProductBarcode.val(parsedData.barcode)
-        inputProductQuantity.val(parsedData.quantity);
-        inputProductPrice.val(parsedData.price);
-        inputProductPriceBought.val(parsedData.price_bought);
-        if (parsedData.image == '' || null || 'null') {
-          inputProductImage.attr('src', 'assets/fruitVeggy.png');
-        }
-        else {
-          inputProductImage.attr('src', 'uploads/images/' + parsedData.image);
-        }
+
+        assignFields(parsedData);
+
       }
     });
+  }
+  //assigns all fields accordingly to given product data
+  function assignFields(parsedData) {
+    inputProductName.val(parsedData.name);
+    inputProductBarcode.val(parsedData.barcode)
+    inputProductQuantity.val(parsedData.quantity);
+    inputProductPrice.val(parsedData.price);
+    inputProductPriceBought.val(parsedData.price_bought);
+    if (parsedData.image == '' || null || 'null') {
+      inputProductImage.attr('src', 'assets/fruitVeggy.png');
+    }
+    else {
+      inputProductImage.attr('src', 'uploads/images/' + parsedData.image);
+    }
   }
   //show image
   function readURL(input) {
@@ -114,7 +118,7 @@ $(document).ready(function () {
       reader.readAsDataURL(input.files[0]);
     }
   }
-
+  // clear all text fields
   function clearFields() {
     inputProductName.val('');
     inputProductBarcode.val('')
@@ -124,6 +128,51 @@ $(document).ready(function () {
     inputProductImage.attr('src', 'assets/fruitVeggy.png');
   }
 
+
+  // ajax add product form submission
+  $("#add-product-form").submit(function (e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    var url = form.attr('action');
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: form.serialize(), // serializes the form's elements.
+      success: function (data) {
+        //alert(data); // show response from the php script.
+        let product = JSON.parse(data);
+        $.notify(product.name + " беше добавен", 'success');
+        clearFields();
+      },
+      error: function (data) {
+        $.notify("Грешка", 'error');
+      },
+    });
+  });
+
+  //typeahead search and select products
+  inputProductName.typeahead({
+    source: function (query, result) {
+      $.ajax({
+        url: "/products",
+        data: 'query=' + query,
+        dataType: "json",
+        type: "POST",
+        success: function (data) {
+          result($.map(data, function (item) {
+            return item;
+          }));
+        }
+      });
+    },
+    afterSelect: function (item) {
+     console.log(item);
+     assignFields(item);
+  }
+  });
 })
 
 

@@ -1,102 +1,97 @@
 <!DOCTYPE html>
 <html>
 
-<head lang="en">
-    <meta charset="UTF-8" />
-    <title>Склад</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {# <link rel="stylesheet" type="text/css" href="css/navbarStyle.css"> #}
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" rel="stylesheet">
+	<head lang="en">
+		<meta charset="UTF-8"/>
+		<title>Склад</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{# <link rel="stylesheet" type="text/css" href="css/navbarStyle.css"> #}
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" rel="stylesheet">
+		<script type="text/javascript" src="js/typeahead.js"></script>
+		<script src="js/scanner.js"></script>
+	</head>
 
-    <script src="js/scanner.js"></script>
+	<body>
+		<div id="interactive" style="display: none" class="viewport">
+			<video autoplay="true" preload="auto"></video>
+		</div>
+		<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="navbar navbar-left" id="navbar-left">
+				<i id="camera-icon" class="fas fa-camera fa-5x"></i>
+			</div>
+			<div class="navbar navbar-right" id="navbar-right">
+				<i id="temp-icon" class="fas fa-plus fa-5x"></i>
+			</div>
+		</nav>
+		{% form_theme form 'bootstrap_4_layout.html.twig' %}
+		{{ form_start(form,{attr: {'id':'add-product-form'}}) }}
+		<div class="form-group" style="border:none">
+			<div class="card">
+				<div class="card-header">
+					{{ form_widget(form.name) }}</div>
+				<div class="image-upload">
 
-</head>
+					<div class="card-body">
+						<div class="form-group row">
+							<label for="barcode-input" class="col-1 col-form-label">Б</label>
+							<div class="col-11">
+								{{ form_widget(form.barcode) }}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="quantity-input" class="col-1 col-form-label">#</label>
+							<div class="col-11">
+								{{ form_widget(form.quantity) }}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="price-input" class="col-1 col-form-label">$</label>
+							<div class="col-11">
+								{{ form_widget(form.price) }}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="price-bought-input" class="col-1 col-form-label">$</label>
+							<div class="col-11">
+								{{ form_widget(form.price_bought) }}
+							</div>
+						</div>
+						<label for="product_file">
+							<img class="card-img-top" id="product_image" style="height: 200px;" src="assets/fruitVeggy.png" alt="Card image cap">
+						</label>
+						{{ form_widget(form.file) }}
+					</div>
+					<div class="float">
+						<button type="submit" id="draggable" class="btn btn-dark">
+							<i class="fas fa-plus fa-3x "></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{ form_end(form) }}
 
-<body>
-    <div id="interactive" style="display: none" class="viewport">
-        <video autoplay="true" preload="auto"></video>
-    </div>
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="navbar navbar-left" id="navbar-left">
-            <i id="camera-icon" class="fas fa-camera fa-5x"></i>
-        </div>
-        <div class="navbar navbar-right" id="navbar-right">
-            <i id="temp-icon" class="fas fa-plus fa-5x"></i>
-        </div>
-    </nav>
-    {% form_theme form 'bootstrap_4_layout.html.twig' %}
-    {{ form_start(form)}}
-        <div class="form-group" style="border:none">
-            <div class="card">
-                <div class="card-header"> {{ form_widget(form.name) }}</div>
-                <div class="image-upload">
+		{# {% form_theme form 'bootstrap_4_layout.html.twig' %}
+		    {{ form(form) }} #}
+	</body>
+	<script src="js/quagga.js"></script>
+	<script src="js/notify.js"></script>
+	<style>
+		label.custom-file-label {
+			display: none;
 
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="barcode-input" class="col-1 col-form-label">Б</label>
-                        <div class="col-11">
-                            {{ form_widget(form.barcode) }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="quantity-input" class="col-1 col-form-label">#</label>
-                        <div class="col-11">
-                            {{ form_widget(form.quantity) }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="price-input" class="col-1 col-form-label">$</label>
-                        <div class="col-11">
-                            {{ form_widget(form.price) }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="price-bought-input" class="col-1 col-form-label">$</label>
-                        <div class="col-11">
-                            {{ form_widget(form.price_bought) }}
-                        </div>
-                    </div>
-                    <label for="product_file">
-                            <img class="card-img-top" id="product_image" style="height: 200px;" src="assets/fruitVeggy.png"
-                                alt="Card image cap">
-                        </label>
-                        {{ form_widget(form.file) }}
-                    </div>
-                    <div class="float">
-                    <button type="submit" class="btn btn-dark">   <i class="fas fa-plus fa-3x "></i></button></div>
-                </div>
-            </div>
-        </div>
-        {{ form_end(form) }}
-
-  {# {% form_theme form 'bootstrap_4_layout.html.twig' %}
-    {{ form(form) }} #}
-</body>
-<script src="js/quagga.js"></script>
-<style>
-label.custom-file-label{
-    display: none;
-    
-}
-.float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40%;
-	right: 10px;
-	text-align:center;
-
-}
-</style>
+		}
+		.float {
+			position: fixed;
+			width: 60px;
+			height: 60px;
+			bottom: 40%;
+			right: 10px;
+			text-align: center;
+		}
+	</style>
+</html>

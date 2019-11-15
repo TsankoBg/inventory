@@ -21,7 +21,10 @@ class ProductController extends AbstractController
      */
     public function getProducts(ProductService $productService)
     {
-        $products = $productService->getProducts();
+        $keyword = strval($_POST['query']);
+        $search_param = "{$keyword}%";
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(Product::class)->findByName($search_param);
         return new Response(json_encode($products, JSON_UNESCAPED_UNICODE));
     }
 
