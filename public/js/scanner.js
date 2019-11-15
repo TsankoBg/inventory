@@ -29,6 +29,7 @@ $(document).ready(function () {
       last_result.push(last_code);
       // check if object which scanned barcode exists
       checkProduct(last_code.code);
+      inputProductBarcode.val(last_code.code);
 
       Quagga.stop();
       interactiveDiv.hide();
@@ -51,7 +52,7 @@ $(document).ready(function () {
       frequency: 20,
       decoder: {
         readers:
-          ['code_128_reader', "ean_reader", "ean_8_reader", "code_39_reader",]
+          ["ean_reader"]
         ,
         debug: {
           drawBoundingBox: false,
@@ -79,6 +80,7 @@ $(document).ready(function () {
   });
   // ajax call request on success returns found product and assigns the field 
   function checkProduct(barcode) {
+    console.log('here');
     clearFields();
     $.ajax({
       type: "POST",
@@ -99,7 +101,7 @@ $(document).ready(function () {
     inputProductName.val(parsedData.name);
     inputProductBarcode.val(parsedData.barcode)
     inputProductQuantity.val(parsedData.quantity);
-    inputProductPrice.val(parsedData.price);
+    //inputProductPrice.val(parsedData.price);
     inputProductPriceBought.val(parsedData.price_bought);
     if (parsedData.image == '' || null || 'null') {
       inputProductImage.attr('src', 'assets/fruitVeggy.png');
