@@ -11,6 +11,7 @@ $(document).ready(function () {
   var inputProductImage = $('#product_image');
   //var w = window.innerWidth;
   //var h = window.innerHeight;
+  let detectionHash = {};
 
   tempButton.click(function () {
     checkProduct(inputProductBarcode.val());
@@ -28,8 +29,13 @@ $(document).ready(function () {
       var last_code = result.codeResult;
       last_result.push(last_code);
       // check if object which scanned barcode exists
-      checkProduct(last_code.code);
-      inputProductBarcode.val(last_code.code);
+
+      detectionHash[last_code.code]++;
+      if(detectionHash[last_code.code] >= 5) {
+        checkProduct(last_code.code);
+        inputProductBarcode.val(last_code.code);
+      }
+
 
       Quagga.stop();
       interactiveDiv.hide();
@@ -48,7 +54,7 @@ $(document).ready(function () {
         patchSize: "high",
         halfSample: true
       },
-      numOfWorkers: 2,
+      numOfWorkers: 4,
       frequency: 20,
       decoder: {
         readers:
