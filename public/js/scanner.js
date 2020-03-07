@@ -96,9 +96,7 @@ $(document).ready(function () {
         //alert(data); // show response from the php script.
         const parsedData = JSON.parse(data);
         //alert(parsedData.name);
-
         assignFields(parsedData);
-
       }
     });
   }

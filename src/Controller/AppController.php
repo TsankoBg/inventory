@@ -22,4 +22,13 @@ class AppController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+        /**
+     * @Route("/price", name="/price")
+     */
+    public function pricePage()
+    {
+        return $this->render('app/pricePage.html.twig', [
+        ]);
+    }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Проверка на цена</title>
+  <link rel="stylesheet" href="css/price.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <div id="center">
+    <input type="text" id="input-barcode" onblur="this.focus()" autofocus> </input>
+    <div id="container">
+
+      <div class="p" id="price-text">0.00лв</div>
+      <div class="p name" id="name-text" > </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js'></script>
+  <script src="js/priceScript.js"></script>
+</body>
+
+</html>
